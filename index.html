@@ -8,165 +8,160 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
-        
         body { font-family: 'Inter', sans-serif; transition: all 0.5s ease; }
         .mono { font-family: 'JetBrains+Mono', monospace; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .optimized-glow { box-shadow: 0 0 50px -10px #16c800; }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #111; }
-        ::-webkit-scrollbar-thumb { background: #16c800; border-radius: 10px; }
+        .optimized-glow { box-shadow: 0 0 60px -15px #16c800; }
+        .browser-scroll::-webkit-scrollbar { width: 4px; }
+        .browser-scroll::-webkit-scrollbar-thumb { background: #16c800; border-radius: 10px; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="bg-zinc-950 text-white min-h-screen overflow-x-hidden">
+<body class="bg-zinc-950 text-white min-h-screen overflow-hidden">
 
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-            <div class="w-3 h-3 rounded-full bg-[#16c800] animate-pulse"></div>
-            <span class="text-xs font-black tracking-[0.3em] uppercase opacity-70">Streamlined Executive Lab // V2.0</span>
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10 px-8 py-5 flex justify-between items-center">
+        <div class="flex items-center gap-4 font-black italic tracking-tighter text-xl">
+            <span class="text-[#16c800]">STREAMLINED</span>LAB
         </div>
-        <div class="flex gap-6">
-            <button onclick="setMode('legacy')" class="text-xs font-bold uppercase tracking-widest hover:text-red-500 transition">Legacy View</button>
-            <button onclick="setMode('streamlined')" class="px-6 py-2 bg-[#16c800] text-black text-xs font-black uppercase tracking-widest rounded-full hover:scale-105 transition transform">Deploy Streamlined Touch</button>
+        <div class="flex items-center gap-8">
+            <div class="hidden md:flex gap-6 text-[10px] font-bold uppercase tracking-[0.2em] opacity-50">
+                <span id="nav-status">System: Idle</span>
+            </div>
+            <button onclick="setMode('streamlined')" class="px-8 py-3 bg-[#16c800] text-black text-[10px] font-black uppercase tracking-widest rounded-full hover:scale-110 transition active:scale-95 shadow-[0_0_20px_rgba(22,200,0,0.4)]">
+                Deploy Transformation
+            </button>
+            <button onclick="setMode('legacy')" class="text-[10px] font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition">Reset</button>
         </div>
     </nav>
 
-    <main class="pt-24 pb-20 px-6 max-w-[1600px] mx-auto grid lg:grid-cols-12 gap-8">
+    <main class="pt-28 pb-10 px-6 max-w-[1700px] mx-auto grid lg:grid-cols-12 gap-8 h-[calc(100vh-120px)]">
         
-        <div class="lg:col-span-3 space-y-6">
-            <div class="glass p-6 rounded-3xl">
-                <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-6">Performance Audit</h3>
-                <div class="space-y-8">
-                    <div id="stat-speed">
-                        <div class="flex justify-between text-xs mb-2"><span>Load Velocity</span><span class="value text-red-500">4.2s</span></div>
-                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                            <div class="progress w-[30%] h-full bg-red-500 transition-all duration-1000"></div>
-                        </div>
+        <div class="lg:col-span-3 flex flex-col gap-6">
+            <div class="glass p-6 rounded-3xl flex-1 overflow-hidden flex flex-col">
+                <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-[#16c800]"></i> Impact Analytics
+                </h3>
+                <div class="space-y-8 flex-1">
+                    <div class="stat-group" id="stat-speed">
+                        <div class="flex justify-between text-[11px] mb-2 font-bold uppercase tracking-tighter"><span>Site Velocity</span><span class="value text-red-500">4.2s</span></div>
+                        <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="progress w-[25%] h-full bg-red-500 transition-all duration-1000"></div></div>
                     </div>
-                    <div id="stat-seo">
-                        <div class="flex justify-between text-xs mb-2"><span>SEO Structural Health</span><span class="value text-red-500">Low</span></div>
-                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                            <div class="progress w-[15%] h-full bg-red-500 transition-all duration-1000"></div>
-                        </div>
+                    <div class="stat-group" id="stat-seo">
+                        <div class="flex justify-between text-[11px] mb-2 font-bold uppercase tracking-tighter"><span>Market Authority</span><span class="value text-red-500">Local Only</span></div>
+                        <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="progress w-[12%] h-full bg-red-500 transition-all duration-1000"></div></div>
                     </div>
-                    <div id="stat-conversion">
-                        <div class="flex justify-between text-xs mb-2"><span>Conversion Propensity</span><span class="value text-red-500">8%</span></div>
-                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                            <div class="progress w-[8%] h-full bg-red-500 transition-all duration-1000"></div>
-                        </div>
+                    <div class="stat-group" id="stat-rev">
+                        <div class="flex justify-between text-[11px] mb-2 font-bold uppercase tracking-tighter"><span>Rev. Efficiency</span><span class="value text-red-500">6.2%</span></div>
+                        <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden"><div class="progress w-[6%] h-full bg-red-500 transition-all duration-1000"></div></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="glass p-6 rounded-3xl overflow-hidden">
-                <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-4">Live System Logs</h3>
-                <div id="logs" class="mono text-[10px] space-y-2 h-48 overflow-y-auto text-zinc-500">
-                    <p>> Initializing audit...</p>
-                    <p>> Warning: Missing JSON-LD Schema</p>
-                    <p>> Warning: Slow Time to First Byte (TTFB)</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="lg:col-span-6">
-            <div id="browser-window" class="w-full aspect-[4/3] bg-white rounded-3xl overflow-hidden shadow-2xl transition-all duration-1000 relative border-4 border-white/5">
                 
-                <div id="view-legacy" class="absolute inset-0 bg-zinc-100 text-zinc-400 p-8 flex flex-col transition-opacity duration-500 overflow-y-auto">
-                    <div class="flex justify-between items-center mb-12 opacity-50">
-                        <div class="w-24 h-6 bg-zinc-300 rounded"></div>
-                        <div class="flex gap-4"><div class="w-12 h-2 bg-zinc-300"></div><div class="w-12 h-2 bg-zinc-300"></div></div>
-                    </div>
-                    <div class="space-y-4 mb-8">
-                        <div class="w-full h-12 bg-zinc-200 rounded"></div>
-                        <div class="w-2/3 h-12 bg-zinc-200 rounded"></div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="h-40 bg-zinc-200 rounded"></div>
-                        <div class="h-40 bg-zinc-200 rounded"></div>
+                <div class="mt-8 pt-6 border-t border-white/5 h-40 overflow-hidden">
+                    <div id="logs" class="mono text-[9px] space-y-1.5 text-zinc-500 uppercase tracking-tighter">
+                        <p class="text-white opacity-100">> System Ready.</p>
+                        <p>> Pending Site Audit...</p>
                     </div>
                 </div>
-
-                <div id="view-streamlined" class="absolute inset-0 bg-black text-white p-12 flex flex-col opacity-0 pointer-events-none transition-all duration-1000 overflow-y-auto translate-y-10">
-                    <div class="flex justify-between items-center mb-20">
-                        <h2 class="text-2xl font-black tracking-tighter italic">STREAMLINED<span class="text-[#16c800]">.</span></h2>
-                        <nav class="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
-                            <span class="text-[#16c800]">Home</span><span>Solutions</span><span>National Audit</span>
-                        </nav>
-                    </div>
-                    <div class="max-w-md">
-                        <p class="text-[#16c800] text-xs font-bold tracking-[0.4em] mb-4">SYSTEMS & REVENUE OPTIMIZATION</p>
-                        <h1 class="text-6xl font-black leading-[0.85] tracking-tighter mb-8 italic uppercase">Nationwide<br/>Authority<br/>Scale.</h1>
-                        <p class="text-zinc-400 text-sm leading-relaxed mb-8">We transform standard SMB operations into high-velocity revenue engines through technical SEO and workflow automation.</p>
-                        <button class="px-8 py-4 bg-[#16c800] text-black font-black uppercase text-xs rounded-none hover:translate-x-2 transition transform">Inquire for Audit</button>
-                    </div>
-                    <div class="mt-20 pt-12 border-t border-white/10 grid grid-cols-3 gap-8">
-                        <div><p class="text-[10px] opacity-40 mb-2">PAGE SPEED</p><p class="text-2xl font-bold">0.42s</p></div>
-                        <div><p class="text-[10px] opacity-40 mb-2">SCHEMA</p><p class="text-2xl font-bold text-[#16c800]">VERIFIED</p></div>
-                        <div><p class="text-[10px] opacity-40 mb-2">RANKING</p><p class="text-2xl font-bold italic">TOP 3</p></div>
-                    </div>
-                </div>
-
             </div>
         </div>
 
-        <div class="lg:col-span-3 space-y-4">
-            <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-4 px-2">Core Solutions</h3>
-            
-            <div class="feature-card glass p-4 rounded-2xl cursor-pointer hover:bg-white/5 transition border-l-4 border-transparent" onclick="highlightFeature('seo')">
-                <i class="fa-solid fa-magnifying-glass-chart text-[#16c800] mb-3"></i>
-                <h4 class="text-sm font-bold uppercase tracking-tight">Technical SEO Injection</h4>
-                <p class="text-[10px] text-zinc-500 mt-1">JSON-LD Schema deployment for local & national search dominance.</p>
-            </div>
+        <div class="lg:col-span-9 relative flex flex-col">
+            <div id="browser-window" class="flex-1 bg-zinc-100 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-1000 border-[6px] border-white/10 relative browser-scroll overflow-y-auto">
+                
+                <div id="view-legacy" class="p-16 text-zinc-300">
+                    <div class="w-32 h-8 bg-zinc-200 rounded mb-20 animate-pulse"></div>
+                    <div class="max-w-xl space-y-6">
+                        <div class="h-16 w-full bg-zinc-200 rounded"></div>
+                        <div class="h-16 w-3/4 bg-zinc-200 rounded"></div>
+                        <div class="h-4 w-full bg-zinc-200 rounded pt-10"></div>
+                        <div class="h-4 w-5/6 bg-zinc-200 rounded"></div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-8 mt-20">
+                        <div class="h-48 bg-zinc-200 rounded shadow-inner"></div>
+                        <div class="h-48 bg-zinc-200 rounded shadow-inner"></div>
+                        <div class="h-48 bg-zinc-200 rounded shadow-inner"></div>
+                    </div>
+                </div>
 
-            <div class="feature-card glass p-4 rounded-2xl cursor-pointer hover:bg-white/5 transition border-l-4 border-transparent" onclick="highlightFeature('ops')">
-                <i class="fa-solid fa-gears text-[#16c800] mb-3"></i>
-                <h4 class="text-sm font-bold uppercase tracking-tight">Operations Audit</h4>
-                <p class="text-[10px] text-zinc-500 mt-1">Identifying manual bottlenecks and workflow leakage points.</p>
-            </div>
+                <div id="view-streamlined" class="hidden bg-black text-white">
+                    
+                    <section class="min-h-[800px] p-20 flex flex-col justify-center relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#16c800]/10 blur-[150px] rounded-full -mr-40 -mt-40"></div>
+                        <p class="text-[#16c800] text-xs font-black tracking-[0.5em] mb-6 uppercase">Scale Nationwide // Deploy Authority</p>
+                        <h1 class="text-[7rem] font-black italic uppercase leading-[0.8] tracking-tighter mb-10">
+                            Build. <br/> <span class="text-[#16c800]">Optimize.</span> <br/> Dominate.
+                        </h1>
+                        <p class="max-w-xl text-zinc-400 text-lg leading-relaxed mb-10">
+                            We don't just build websites. We engineer high-velocity digital assets that convert at a local, regional, and national scale.
+                        </p>
+                        <div class="flex gap-6">
+                            <button class="px-10 py-5 bg-[#16c800] text-black font-black uppercase text-xs tracking-widest shadow-[0_15px_30px_rgba(22,200,0,0.2)]">Start National Audit</button>
+                            <button class="px-10 py-5 border border-white/20 text-white font-black uppercase text-xs tracking-widest hover:bg-white hover:text-black transition">The Process</button>
+                        </div>
+                    </section>
 
-            <div class="feature-card glass p-4 rounded-2xl cursor-pointer hover:bg-white/5 transition border-l-4 border-transparent" onclick="highlightFeature('scale')">
-                <i class="fa-solid fa-bolt text-[#16c800] mb-3"></i>
-                <h4 class="text-sm font-bold uppercase tracking-tight">Velocity Scaling</h4>
-                <p class="text-[10px] text-zinc-500 mt-1">Increasing site performance to the 99th percentile globally.</p>
+                    <section class="py-32 px-20 bg-zinc-950 border-t border-white/5">
+                        <div class="grid grid-cols-2 gap-20">
+                            <div>
+                                <h2 class="text-4xl font-black uppercase tracking-tighter italic mb-8 italic">The Authority <span class="text-[#16c800]">Gap.</span></h2>
+                                <p class="text-zinc-500 mb-8 leading-relaxed">Most businesses stay local because their technical infrastructure can't handle national search volume. Our <strong>Double-Dip</strong> SEO strategy bridges that gap.</p>
+                                <ul class="space-y-4 text-sm font-bold uppercase tracking-widest">
+                                    <li class="flex items-center gap-4 text-[#16c800]"><i class="fa-solid fa-check"></i> Technical Schema Injection</li>
+                                    <li class="flex items-center gap-4 text-[#16c800]"><i class="fa-solid fa-check"></i> Sub-0.5s Global Load Times</li>
+                                    <li class="flex items-center gap-4 text-[#16c800]"><i class="fa-solid fa-check"></i> AI-Optimized Content Silos</li>
+                                </ul>
+                            </div>
+                            <div class="bg-zinc-900 rounded-3xl p-10 border border-white/5 flex flex-col justify-center">
+                                <div class="text-[10rem] font-black text-[#16c800]/10 leading-none absolute select-none">DATA</div>
+                                <div class="relative z-10">
+                                    <p class="text-xs uppercase font-bold tracking-[0.3em] text-[#16c800] mb-2">Result Metric</p>
+                                    <h3 class="text-7xl font-black">+420%</h3>
+                                    <p class="text-zinc-400 mt-2">Avg. Increase in National Visibility</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="py-32 px-20 text-center bg-[#16c800] text-black">
+                        <h2 class="text-6xl font-black uppercase italic tracking-tighter mb-8">Ready to Scale?</h2>
+                        <p class="text-black/70 font-bold max-w-2xl mx-auto mb-12">Don't leave your market dominance to chance. Secure your Nationwide Audit and out-rank your competition today.</p>
+                        <div class="text-4xl font-black">STMLD.2026</div>
+                    </section>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
         function setMode(mode) {
+            const browser = document.getElementById('browser-window');
             const legacy = document.getElementById('view-legacy');
             const streamlined = document.getElementById('view-streamlined');
-            const browser = document.getElementById('browser-window');
             const logs = document.getElementById('logs');
+            const navStatus = document.getElementById('nav-status');
 
             if (mode === 'streamlined') {
-                legacy.style.opacity = '0';
-                streamlined.style.opacity = '1';
-                streamlined.style.pointerEvents = 'auto';
-                streamlined.style.transform = 'translateY(0)';
-                browser.classList.add('optimized-glow');
-                browser.style.borderColor = '#16c800';
+                navStatus.innerText = "System: Optimized";
+                navStatus.classList.remove('opacity-50');
+                navStatus.classList.add('text-[#16c800]');
                 
-                updateStat('speed', '0.4s', '98%', '#16c800');
+                legacy.classList.add('hidden');
+                streamlined.classList.remove('hidden');
+                browser.classList.add('optimized-glow');
+                browser.style.borderColor = 'rgba(22, 200, 0, 0.4)';
+                browser.scrollTop = 0;
+
+                updateStat('speed', '0.42s', '98%', '#16c800');
                 updateStat('seo', 'National', '100%', '#16c800');
-                updateStat('conversion', '34%', '92%', '#16c800');
+                updateStat('rev', '94.8%', '94%', '#16c800');
 
-                logs.innerHTML += `<p class="text-[#16c800]">> OPTIMIZATION COMPLETE</p>`;
-                logs.innerHTML += `<p class="text-[#16c800]">> National Schema Injected</p>`;
-                logs.scrollTop = logs.scrollHeight;
+                addLog("> Injecting National SEO Schema...");
+                setTimeout(() => addLog("> Compressing Asset Clusters..."), 300);
+                setTimeout(() => addLog("> Activating Global CDN..."), 600);
+                setTimeout(() => addLog("> OPTIMIZATION_COMPLETE"), 900);
             } else {
-                legacy.style.opacity = '1';
-                streamlined.style.opacity = '0';
-                streamlined.style.pointerEvents = 'none';
-                streamlined.style.transform = 'translateY(10px)';
-                browser.classList.remove('optimized-glow');
-                browser.style.borderColor = 'rgba(255,255,255,0.05)';
-
-                updateStat('speed', '4.2s', '30%', '#ef4444');
-                updateStat('seo', 'Low', '15%', '#ef4444');
-                updateStat('conversion', '8%', '8%', '#ef4444');
+                location.reload(); // Simplest reset
             }
         }
 
@@ -178,9 +173,12 @@
             el.querySelector('.progress').style.backgroundColor = color;
         }
 
-        function highlightFeature(feat) {
+        function addLog(txt) {
             const logs = document.getElementById('logs');
-            logs.innerHTML += `<p class="text-white">> Highlighting: ${feat.toUpperCase()} impact...</p>`;
+            const p = document.createElement('p');
+            p.innerText = txt;
+            p.className = "text-[#16c800] font-bold";
+            logs.appendChild(p);
             logs.scrollTop = logs.scrollHeight;
         }
     </script>
