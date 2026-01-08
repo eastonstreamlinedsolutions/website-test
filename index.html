@@ -8,109 +8,98 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono&display=swap');
-        
-        :root {
-            --ss-green: #16c800;
-            --ss-black: #000000;
-            --ss-soft-gray: #eeeeee;
-        }
-
-        body { font-family: 'Inter', sans-serif; transition: all 0.5s ease; background-color: #09090b; color: white; }
+        :root { --ss-green: #16c800; --ss-black: #000000; --ss-soft-gray: #eeeeee; }
+        body { font-family: 'Inter', sans-serif; transition: all 0.5s ease; background-color: #050505; color: white; overflow: hidden; }
         .mono { font-family: 'JetBrains+Mono', monospace; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .optimized-glow { box-shadow: 0 0 60px -15px var(--ss-green); }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .optimized-glow { box-shadow: 0 0 80px -20px var(--ss-green); }
         
-        /* --- YOUR ROADMAP STYLES --- */
-        .ss-roadmap-outer-container { width: 100%; display: flex; justify-content: center; padding: 0; margin: 0; background: white; border-radius: 40px; }
-        .ss-roadmap-section { width: 100%; max-width: 1250px; margin: 0 auto; padding: 60px 24px; color: black; }
-        .ss-roadmap-header h2 { font-size: 0.9rem; color: var(--ss-green); text-transform: uppercase; letter-spacing: 4px; font-weight: 800; margin-bottom: 12px; }
-        .ss-roadmap-header p { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; color: var(--ss-black); margin-bottom: 40px; letter-spacing: -1.5px; line-height: 1.05; }
+        /* YOUR ROADMAP STYLES */
+        .ss-roadmap-outer-container { width: 100%; display: flex; justify-content: center; background: white; border-radius: 40px; }
+        .ss-roadmap-section { width: 100%; max-width: 1250px; padding: 60px 24px; color: black; }
+        .ss-roadmap-header p { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; margin-bottom: 40px; line-height: 1.05; }
         .ss-roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; position: relative; }
-        .ss-roadmap-grid::before {
-            content: ""; position: absolute; top: 45px; left: 8%; right: 8%; height: 4px; 
-            background: linear-gradient(90deg, var(--ss-soft-gray) 0%, var(--ss-green) 50%, var(--ss-soft-gray) 100%);
-            background-size: 200% 100%; animation: flowLine 3s linear infinite; z-index: 1;
-        }
+        .ss-roadmap-grid::before { content: ""; position: absolute; top: 45px; left: 8%; right: 8%; height: 4px; background: linear-gradient(90deg, var(--ss-soft-gray) 0%, var(--ss-green) 50%, var(--ss-soft-gray) 100%); background-size: 200% 100%; animation: flowLine 3s linear infinite; z-index: 1; }
         @keyframes flowLine { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
-        .ss-step { position: relative; z-index: 2; display: flex; flex-direction: column; }
-        .ss-step-number { 
-            width: 80px; height: 80px; background: white; border: 4px solid var(--ss-soft-gray); color: var(--ss-black); 
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; 
-        }
-        .ss-step h3 { font-size: 1.3rem; font-weight: 900; color: var(--ss-black); margin-bottom: 10px; text-transform: uppercase; }
-        .ss-step p { font-size: 1rem; line-height: 1.5; color: #444; }
+        .ss-step { position: relative; z-index: 2; }
+        .ss-step-number { width: 80px; height: 80px; background: white; border: 4px solid var(--ss-soft-gray); color: var(--ss-black); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; margin-bottom: 20px; }
 
-        /* MODAL ANIMATION */
-        #process-modal { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .overlay-blur { filter: blur(10px); }
+        /* REVENUE COUNTER ANIMATION */
+        .leak-red { color: #ff4d4d; animation: pulseRed 2s infinite; }
+        @keyframes pulseRed { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="overflow-hidden">
+<body>
 
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10 px-8 py-5 flex justify-between items-center">
-        <div class="font-black italic tracking-tighter text-xl"><span class="text-[#16c800]">STREAMLINED</span>LAB</div>
-        <div class="flex items-center gap-6">
-            <button onclick="setMode('streamlined')" class="px-8 py-3 bg-[#16c800] text-black text-[10px] font-black uppercase tracking-widest rounded-full hover:scale-110 transition shadow-[0_0_20px_rgba(22,200,0,0.4)]">Deploy Optimization</button>
-            <button onclick="window.location.reload()" class="text-[10px] font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition">Reset</button>
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5 px-10 py-6 flex justify-between items-center">
+        <div class="font-black italic tracking-tighter text-2xl"><span class="text-[#16c800]">STREAMLINED</span>LAB</div>
+        <div class="flex items-center gap-8">
+            <div id="rev-leak-container" class="text-right">
+                <p class="text-[9px] uppercase font-bold tracking-[0.2em] opacity-40">Annual Revenue Leakage</p>
+                <p id="rev-leak-value" class="text-xl font-black mono leak-red">-$142,500</p>
+            </div>
+            <button onclick="setMode('streamlined')" class="px-10 py-4 bg-[#16c800] text-black text-[11px] font-black uppercase tracking-[0.2em] rounded-full hover:scale-105 transition shadow-[0_0_30px_rgba(22,200,0,0.3)]">Initialize Scale</button>
         </div>
     </nav>
 
-    <main id="main-content" class="pt-28 pb-10 px-6 max-w-[1700px] mx-auto grid lg:grid-cols-12 gap-8 h-[calc(100vh-120px)]">
+    <main id="main-content" class="pt-32 pb-10 px-8 max-w-[1800px] mx-auto grid lg:grid-cols-12 gap-10 h-[calc(100vh-140px)]">
         
         <div class="lg:col-span-3 flex flex-col gap-6">
-            <div class="glass p-6 rounded-3xl flex-1 flex flex-col">
-                <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-6 italic">Performance Audit</h3>
-                <div class="space-y-8 flex-1">
+            <div class="glass p-8 rounded-[2rem] flex-1 flex flex-col">
+                <h3 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-8 italic">Diagnostic Intelligence</h3>
+                
+                <div class="space-y-10 flex-1">
                     <div id="stat-speed">
-                        <div class="flex justify-between text-[11px] mb-2 font-bold uppercase"><span>Velocity</span><span class="value text-red-500">4.2s</span></div>
-                        <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden"><div class="progress w-[25%] h-full bg-red-500 transition-all duration-1000"></div></div>
+                        <div class="flex justify-between text-xs mb-3 font-bold uppercase tracking-widest"><span>Global Velocity</span><span class="value text-red-500">Poor (4.2s)</span></div>
+                        <div class="w-full h-1 bg-white/5 rounded-full"><div class="progress w-[25%] h-full bg-red-500 transition-all duration-1000"></div></div>
                     </div>
                     <div id="stat-seo">
-                        <div class="flex justify-between text-[11px] mb-2 font-bold uppercase"><span>Authority</span><span class="value text-red-500">Local</span></div>
-                        <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden"><div class="progress w-[12%] h-full bg-red-500 transition-all duration-1000"></div></div>
+                        <div class="flex justify-between text-xs mb-3 font-bold uppercase tracking-widest"><span>National Reach</span><span class="value text-red-500">0.0%</span></div>
+                        <div class="w-full h-1 bg-white/5 rounded-full"><div class="progress w-[5%] h-full bg-red-500 transition-all duration-1000"></div></div>
                     </div>
                 </div>
-                <div class="mt-8 pt-6 border-t border-white/5 h-32 overflow-hidden">
-                    <div id="logs" class="mono text-[9px] space-y-1.5 text-zinc-500 uppercase tracking-tighter">
-                        <p class="text-white">> SYSTEM_IDLE</p>
+
+                <div class="mt-10 pt-8 border-t border-white/5">
+                    <p class="text-[10px] font-black uppercase opacity-30 mb-4">Live Code Injection</p>
+                    <div id="logs" class="mono text-[10px] space-y-2 h-40 overflow-hidden text-zinc-600 leading-tight">
+                        <p>> Awaiting Optimization Command...</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="lg:col-span-9 relative flex flex-col">
-            <div id="browser-window" class="flex-1 bg-zinc-100 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-1000 border-[6px] border-white/10 relative overflow-y-auto">
+            <div id="browser-window" class="flex-1 bg-zinc-100 rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-[1.2s] border-[8px] border-white/5 relative overflow-y-auto">
                 
-                <div id="view-legacy" class="p-20 text-zinc-300">
-                    <div class="w-32 h-8 bg-zinc-200 rounded mb-10 animate-pulse"></div>
-                    <div class="h-16 w-full bg-zinc-200 rounded mb-4"></div>
-                    <div class="h-16 w-3/4 bg-zinc-200 rounded"></div>
-                    <div class="grid grid-cols-2 gap-8 mt-20">
-                        <div class="h-64 bg-zinc-200 rounded shadow-inner"></div>
-                        <div class="h-64 bg-zinc-200 rounded shadow-inner"></div>
+                <div id="view-legacy" class="p-24 opacity-40">
+                    <div class="w-48 h-10 bg-zinc-300 rounded-full mb-16"></div>
+                    <div class="h-20 w-full bg-zinc-200 rounded-2xl mb-6"></div>
+                    <div class="h-20 w-2/3 bg-zinc-200 rounded-2xl"></div>
+                    <div class="grid grid-cols-3 gap-10 mt-24">
+                        <div class="h-64 bg-zinc-200 rounded-3xl"></div>
+                        <div class="h-64 bg-zinc-200 rounded-3xl"></div>
+                        <div class="h-64 bg-zinc-200 rounded-3xl"></div>
                     </div>
                 </div>
 
-                <div id="view-streamlined" class="hidden bg-black text-white">
-                    <section class="min-h-[700px] p-20 flex flex-col justify-center relative">
-                        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#16c800]/10 blur-[120px] rounded-full"></div>
-                        <p class="text-[#16c800] text-xs font-black tracking-[0.5em] mb-6 uppercase">Scale Nationwide</p>
-                        <h1 class="text-[6rem] font-black italic uppercase leading-[0.8] tracking-tighter mb-10">Built to <br/><span class="text-[#16c800]">Dominate.</span></h1>
-                        <div class="flex gap-6">
-                            <button class="px-10 py-5 bg-[#16c800] text-black font-black uppercase text-xs tracking-widest">Free Site Audit</button>
-                            <button onclick="openProcess()" class="px-10 py-5 border border-white/20 text-white font-black uppercase text-xs tracking-widest hover:bg-[#16c800] hover:text-black transition">Our Process</button>
+                <div id="view-streamlined" class="hidden bg-[#050505] text-white min-h-full">
+                    <section class="min-h-[800px] p-24 flex flex-col justify-center relative">
+                        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#16c800]/10 blur-[150px] rounded-full"></div>
+                        <p class="text-[#16c800] text-sm font-black tracking-[0.6em] mb-8 uppercase">National Authority Protocol</p>
+                        <h1 class="text-[8rem] font-black italic uppercase leading-[0.8] tracking-tight mb-12">Scale <br/><span class="text-[#16c800]">Faster.</span></h1>
+                        <div class="flex gap-8">
+                            <button class="px-12 py-6 bg-[#16c800] text-black font-black uppercase text-xs tracking-widest hover:scale-105 transition">Start Scaling</button>
+                            <button onclick="openProcess()" class="px-12 py-6 border border-white/20 text-white font-black uppercase text-xs tracking-widest hover:bg-white hover:text-black transition">The Framework</button>
                         </div>
                     </section>
                 </div>
-
             </div>
         </div>
     </main>
 
-    <div id="process-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-6 bg-black/90 backdrop-blur-md">
+    <div id="process-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-10 bg-black/95 backdrop-blur-xl transition-all">
         <div class="relative w-full max-w-6xl">
-            <button onclick="closeProcess()" class="absolute -top-12 right-0 text-white font-bold uppercase tracking-widest text-xs hover:text-[#16c800]">Close [X]</button>
-            
+            <button onclick="closeProcess()" class="absolute -top-16 right-0 text-white font-black text-xs tracking-widest opacity-50 hover:opacity-100 transition">CLOSE MODAL [ESC]</button>
             <div class="ss-roadmap-outer-container">
                 <div class="ss-roadmap-section">
                     <div class="ss-roadmap-header">
@@ -118,9 +107,9 @@
                         <p>3 Steps to a Streamlined Business</p>
                     </div>
                     <div class="ss-roadmap-grid">
-                        <div class="ss-step"><div class="ss-step-number">01</div><div><h3>Discovery</h3><p>A strategy session so we can identify the specific bottlenecks slowing your growth.</p></div></div>
-                        <div class="ss-step"><div class="ss-step-number">02</div><div><h3>Strategy</h3><p>We build a custom roadmap focused on automation, structure, and branding.</p></div></div>
-                        <div class="ss-step"><div class="ss-step-number">03</div><div><h3>Grow</h3><p>With systems running smoothly, you focus on high level growth.</p></div></div>
+                        <div class="ss-step"><div class="ss-step-number">01</div><div><h3>Discovery</h3><p>Strategy session to identify specific bottlenecks slowing your growth.</p></div></div>
+                        <div class="ss-step"><div class="ss-step-number">02</div><div><h3>Strategy</h3><p>Custom roadmap focused on automation, structure, and branding.</p></div></div>
+                        <div class="ss-step"><div class="ss-step-number">03</div><div><h3>Grow</h3><p>With systems running, you focus on high level growth.</p></div></div>
                     </div>
                 </div>
             </div>
@@ -128,24 +117,35 @@
     </div>
 
     <script>
-        function setMode(mode) {
-            const browser = document.getElementById('browser-window');
-            const legacy = document.getElementById('view-legacy');
-            const streamlined = document.getElementById('view-streamlined');
-            const logs = document.getElementById('logs');
+        let leakAmount = 142500;
+        let leakInterval;
 
+        // Revenue Leak Logic
+        function startLeak() {
+            leakInterval = setInterval(() => {
+                leakAmount += Math.floor(Math.random() * 50);
+                document.getElementById('rev-leak-value').innerText = "-$" + leakAmount.toLocaleString();
+            }, 2000);
+        }
+        startLeak();
+
+        function setMode(mode) {
             if (mode === 'streamlined') {
-                legacy.classList.add('hidden');
-                streamlined.classList.remove('hidden');
-                browser.classList.add('optimized-glow');
-                browser.style.borderColor = 'rgba(22, 200, 0, 0.4)';
+                clearInterval(leakInterval);
+                document.getElementById('rev-leak-value').innerText = "$0.00";
+                document.getElementById('rev-leak-value').classList.remove('leak-red');
+                document.getElementById('rev-leak-value').classList.add('text-[#16c800]');
+                document.getElementById('rev-leak-container').querySelector('p').innerText = "Revenue Leakage Plugged";
+
+                document.getElementById('view-legacy').classList.add('hidden');
+                document.getElementById('view-streamlined').classList.remove('hidden');
+                document.getElementById('browser-window').classList.add('optimized-glow');
+                document.getElementById('browser-window').style.borderColor = 'rgba(22, 200, 0, 0.4)';
 
                 updateStat('speed', '0.42s', '98%', '#16c800');
-                updateStat('seo', 'National', '100%', '#16c800');
+                updateStat('seo', '100%', '100%', '#16c800');
 
-                logs.innerHTML += `<p class="text-[#16c800] font-bold">> INJECTING ROADMAP...</p>`;
-                logs.innerHTML += `<p class="text-[#16c800] font-bold">> OPTIMIZATION_COMPLETE</p>`;
-                logs.scrollTop = logs.scrollHeight;
+                injectCodeWaterfall();
             }
         }
 
@@ -157,15 +157,33 @@
             el.querySelector('.progress').style.backgroundColor = color;
         }
 
+        function injectCodeWaterfall() {
+            const logs = document.getElementById('logs');
+            const lines = [
+                "> INJECTING_JSON_LD...",
+                "> '@type': 'NationalBusiness'",
+                "> 'areaServed': 'US'",
+                "> 'velocity_score': 0.99",
+                "> CDN_GLOBAL_HANDSHAKE...",
+                "> SUCCESS: REVENUE_STABILIZED"
+            ];
+            logs.innerHTML = "";
+            lines.forEach((line, i) => {
+                setTimeout(() => {
+                    logs.innerHTML += `<p class="text-[#16c800] font-bold">${line}</p>`;
+                }, i * 300);
+            });
+        }
+
         function openProcess() {
             document.getElementById('process-modal').classList.remove('hidden');
             document.getElementById('process-modal').classList.add('flex');
-            document.getElementById('main-content').classList.add('overlay-blur');
+            document.getElementById('main-content').style.filter = "blur(15px)";
         }
 
         function closeProcess() {
             document.getElementById('process-modal').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('overlay-blur');
+            document.getElementById('main-content').style.filter = "none";
         }
     </script>
 </body>
